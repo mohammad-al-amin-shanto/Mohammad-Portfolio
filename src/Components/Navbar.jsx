@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { profile } from "../Datas/PortFolioData";
-import { NAV_ITEMS } from "../Datas/navigation";
+import { profile } from "./../data/profile";
 import { scrollToSection } from "./../Utils/scrollToSection";
+import { NAV_ITEMS } from "../data/navigation";
 
 function Navbar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
