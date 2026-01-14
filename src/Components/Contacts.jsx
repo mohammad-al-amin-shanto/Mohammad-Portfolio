@@ -1,77 +1,86 @@
-import React from "react";
-import { profile } from "../Datas/PortFolioData";
+import { profile } from "../data/profile";
 import { FaEnvelope, FaPhone, FaWhatsapp } from "react-icons/fa";
 
-const Contact = () => {
-  const { email, phone, whatsapp } = profile;
+const CONTACTS = [
+  {
+    label: "Email",
+    value: profile.email,
+    href: `mailto:${profile.email}`,
+    icon: <FaEnvelope size={18} />,
+  },
+  {
+    label: "Phone",
+    value: profile.phone,
+    href: `tel:${profile.phone}`,
+    icon: <FaPhone size={18} />,
+  },
+  {
+    label: "WhatsApp",
+    value: "Chat on WhatsApp",
+    href: `https://wa.me/${profile.whatsapp}`,
+    icon: <FaWhatsapp size={18} />,
+    external: true,
+  },
+];
 
-  const contacts = [
-    {
-      label: "Email Me",
-      href: `mailto:${email}`,
-      gradient: "from-blue-500 to-indigo-600",
-      icon: <FaEnvelope className="text-xl" />,
-    },
-    {
-      label: "Call Me",
-      href: `tel:${phone}`,
-      gradient: "from-green-500 to-emerald-600",
-      icon: <FaPhone className="text-xl" />,
-    },
-    {
-      label: "WhatsApp",
-      href: `https://wa.me/${whatsapp}`,
-      gradient: "from-teal-400 to-green-500",
-      icon: <FaWhatsapp className="text-xl" />,
-    },
-  ];
-
+export default function Contact() {
   return (
     <section
-      className="relative py-20 sm:py-24 bg-gradient-to-b from-blue-50 via-white to-blue-50 overflow-hidden"
       id="contact"
+      className="relative py-28 overflow-hidden bg-[#0b0f1a]"
     >
-      {/* Background blobs */}
-      <div className="absolute -top-28 -left-28 w-72 h-72 bg-indigo-300/20 blur-[120px] animate-pulse sm:w-96 sm:h-96"></div>
-      <div className="absolute -bottom-28 -right-28 w-72 h-72 bg-green-300/20 blur-[120px] animate-pulse sm:w-96 sm:h-96"></div>
+      {/* Aurora Background */}
+      <div className="pointer-events-none absolute inset-0">
+        <div
+          className="absolute top-[-30%] left-[-25%] w-[700px] h-[700px]
+                        bg-indigo-500/10 rounded-full blur-[180px]"
+        />
+        <div
+          className="absolute bottom-[-40%] right-[-25%] w-[700px] h-[700px]
+                        bg-cyan-500/10 rounded-full blur-[200px]"
+        />
+      </div>
 
-      <div className="relative z-10 container mx-auto px-6 text-center max-w-3xl">
-        <h2 className="text-4xl sm:text-5xl font-extrabold mb-4 text-gray-900">
-          Get In Touch
-        </h2>
-        <p className="text-gray-600 mb-10 sm:mb-12 text-base sm:text-lg">
-          I’m always open to discussing new projects, creative ideas, or
-          opportunities to collaborate.
-        </p>
+      <div className="relative z-10 max-w-6xl mx-auto px-6">
+        {/* Header */}
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-3xl font-semibold text-white">
+            Let’s Work Together
+          </h2>
+          <p className="mt-4 text-gray-400 leading-relaxed">
+            I’m open to remote opportunities, freelance work, and meaningful
+            collaborations. Reach out through any of the channels below.
+          </p>
+        </div>
 
-        <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
-          {contacts.map((contact, index) => (
+        {/* Contact Cards */}
+        <div className="mt-16 grid sm:grid-cols-3 gap-6">
+          {CONTACTS.map((contact) => (
             <a
-              key={index}
+              key={contact.label}
               href={contact.href}
-              target={contact.label === "WhatsApp" ? "_blank" : "_self"}
+              target={contact.external ? "_blank" : "_self"}
               rel="noopener noreferrer"
-              className={`group relative px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-white font-semibold shadow-lg
-                         bg-gradient-to-r ${contact.gradient}
-                         hover:scale-105 hover:shadow-2xl transition-transform duration-300 flex items-center gap-3 justify-center overflow-hidden`}
+              className="group rounded-2xl p-6
+                         bg-white/5 backdrop-blur-xl
+                         border border-white/10
+                         hover:border-white/20
+                         transition"
             >
-              {/* Glow effect */}
-              <span className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-30 blur-lg transition-all duration-300 rounded-xl"></span>
-
-              {/* Icon */}
-              <span className="relative transform group-hover:rotate-12 transition-transform duration-300">
+              <div className="flex items-center gap-3 text-indigo-300 mb-3">
                 {contact.icon}
-              </span>
+                <span className="text-sm font-medium text-white">
+                  {contact.label}
+                </span>
+              </div>
 
-              <span className="relative text-sm sm:text-base">
-                {contact.label}
-              </span>
+              <p className="text-sm text-gray-400 group-hover:text-gray-300 transition">
+                {contact.value}
+              </p>
             </a>
           ))}
         </div>
       </div>
     </section>
   );
-};
-
-export default Contact;
+}
