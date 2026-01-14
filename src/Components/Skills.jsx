@@ -1,109 +1,133 @@
-import React, { useRef, useEffect, useState, useMemo } from "react";
-import { skills } from "../Datas/PortFolioData";
+import { useRef, useEffect, useState, useMemo } from "react";
+import { skills } from "../data/skills";
 import { FiMonitor } from "react-icons/fi";
 import { FaDatabase, FaTools } from "react-icons/fa";
 
-const Skills = () => {
+export default function Skills() {
+  const sectionRef = useRef(null);
   const [visible, setVisible] = useState(false);
   const [counters, setCounters] = useState({});
-  const sectionRef = useRef(null);
 
-  const { frontend, backend, tools } = skills;
-
-  const skillGroup = useMemo(
+  const skillGroups = useMemo(
     () => [
       {
         title: "Frontend",
-        skills: frontend,
-        icon: <FiMonitor className="text-3xl text-indigo-500" />,
+        icon: <FiMonitor size={20} />,
+        skills: skills.frontend,
       },
       {
         title: "Backend",
-        skills: backend,
-        icon: <FaDatabase className="text-3xl text-green-500" />,
+        icon: <FaDatabase size={20} />,
+        skills: skills.backend,
       },
       {
         title: "Tools",
-        skills: tools,
-        icon: <FaTools className="text-3xl text-purple-500" />,
+        icon: <FaTools size={20} />,
+        skills: skills.tools,
       },
     ],
-    [frontend, backend, tools]
+    []
   );
 
+  /* ---------------- Intersection Observer ---------------- */
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => setVisible(entry.isIntersecting),
-      { threshold: 0.3 }
+      { threshold: 0.35 }
     );
+
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
+  /* ---------------- Count-up Animation ---------------- */
   useEffect(() => {
-    if (visible) {
-      const interval = setInterval(() => {
-        setCounters((prev) => {
-          const updated = {};
-          skillGroup.forEach((group) =>
-            group.skills.forEach((s) => {
-              const current = prev[s.name] || 0;
-              updated[s.name] = current < s.level ? current + 2 : s.level;
-            })
-          );
-          return updated;
-        });
-      }, 20);
-      return () => clearInterval(interval);
-    }
-  }, [visible, skillGroup]);
+    if (!visible) return;
+
+    const interval = setInterval(() => {
+      setCounters((prev) => {
+        const updated = { ...prev };
+
+        skillGroups.forEach((group) =>
+          group.skills.forEach(({ name, level }) => {
+            const current = updated[name] || 0;
+            updated[name] = current < level ? current + 0.5 : level;
+          })
+        );
+
+        return updated;
+      });
+    }, 40);
+
+    return () => clearInterval(interval);
+  }, [visible, skillGroups]);
 
   return (
     <section
       id="skills"
       ref={sectionRef}
-      className="relative py-20 bg-gradient-to-b from-white via-blue-50 to-blue-100"
+      className="relative py-28 overflow-hidden bg-[#0b0f1a]"
     >
-      {/* Background accents */}
-      <div className="absolute -top-28 -left-28 w-80 h-80 bg-indigo-300/20 blur-[120px]" />
-      <div className="absolute bottom-0 right-0 w-80 h-80 bg-purple-300/20 blur-[120px]" />
+      {/* Aurora Background */}
+      <div className="pointer-events-none absolute inset-0">
+        <div
+          className="absolute top-[-30%] left-[-25%] w-[700px] h-[700px]
+                        bg-indigo-500/10 rounded-full blur-[180px]"
+        />
+        <div
+          className="absolute bottom-[-40%] right-[-25%] w-[700px] h-[700px]
+                        bg-cyan-500/10 rounded-full blur-[200px]"
+        />
+      </div>
 
-      <div className="relative z-10 container mx-auto px-6 max-w-5xl">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-14">
-          <span className="bg-gradient-to-r from-indigo-600 to-cyan-500 bg-clip-text text-transparent">
+      <div className="relative z-10 max-w-6xl mx-auto px-6">
+        {/* Header */}
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-3xl font-semibold text-white">
             Skills & Expertise
-          </span>
-        </h2>
+          </h2>
+          <p className="mt-4 text-gray-400">
+            Technologies I use to design, build, and ship production systems.
+          </p>
+        </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {skillGroup.map((group) => (
+        {/* Skill Cards */}
+        <div className="mt-16 grid md:grid-cols-3 gap-8">
+          {skillGroups.map((group) => (
             <div
               key={group.title}
-              className="rounded-2xl p-6 bg-white/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-transform duration-300 hover:-translate-y-2"
+              className="rounded-2xl p-6
+                         bg-white/5 backdrop-blur-xl
+                         border border-white/10
+                         hover:border-white/20
+                         transition"
             >
-              <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="flex items-center gap-3 mb-6 text-indigo-300">
                 {group.icon}
-                <h3 className="text-xl font-bold text-gray-800">
+                <h3 className="text-lg font-medium text-white">
                   {group.title}
                 </h3>
               </div>
 
               <ul className="space-y-4">
-                {group.skills.map((skill, i) => (
-                  <li key={i}>
-                    <div className="flex justify-between text-sm font-medium text-gray-700 mb-1">
-                      <span>{skill.name}</span>
-                      <span>{visible ? counters[skill.name] || 0 : 0}%</span>
+                {group.skills.map((skill) => (
+                  <li key={skill.name}>
+                    <div className="flex justify-between text-sm mb-1">
+                      <span className="text-gray-300">{skill.name}</span>
+                      <span className="text-gray-400">
+                        {visible ? counters[skill.name] || 0 : 0}%
+                      </span>
                     </div>
-                    <div className="w-full h-2.5 bg-gray-200 rounded-full overflow-hidden">
+
+                    <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-cyan-500 transition-all duration-700 ease-out"
+                        className="h-full rounded-full bg-indigo-400 transition-all duration-[600ms] ease-out"
                         style={{
                           width: visible
                             ? `${counters[skill.name] || 0}%`
                             : "0%",
                         }}
-                      ></div>
+                      />
                     </div>
                   </li>
                 ))}
@@ -114,6 +138,4 @@ const Skills = () => {
       </div>
     </section>
   );
-};
-
-export default Skills;
+}

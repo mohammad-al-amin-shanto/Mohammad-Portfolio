@@ -1,131 +1,192 @@
-import React, { useState } from "react";
-import { projects } from "../Datas/PortFolioData";
+import { useState } from "react";
+import { projects } from "../data/projects";
 
-const Projects = () => {
-  const [selectedProject, setSelectedProject] = useState(null);
+export default function Projects() {
+  const [activeProject, setActiveProject] = useState(null);
 
   return (
-    <section className="py-20 bg-transparent relative" id="projects">
-      {/* Background blobs */}
-      <div className="absolute top-10 left-10 w-48 h-48 bg-indigo-300 rounded-full blur-[100px] opacity-20 animate-pulse"></div>
-      <div className="absolute bottom-10 right-10 w-56 h-56 bg-purple-300 rounded-full blur-[120px] opacity-20 animate-pulse"></div>
+    <section
+      id="projects"
+      className="relative py-28 overflow-hidden bg-[#0b0f1a]"
+    >
+      {/* Aurora Background */}
+      <div className="pointer-events-none absolute inset-0">
+        <div
+          className="absolute top-[-30%] left-[-25%] w-[700px] h-[700px]
+                        bg-indigo-500/10 rounded-full blur-[180px]"
+        />
+        <div
+          className="absolute bottom-[-40%] right-[-25%] w-[700px] h-[700px]
+                        bg-cyan-500/10 rounded-full blur-[200px]"
+        />
+      </div>
 
-      <div className="container mx-auto px-6 max-w-6xl relative z-10">
-        <h2 className="text-5xl font-extrabold text-center mb-16">
-          <span className="bg-gradient-to-r from-indigo-600 to-cyan-500 bg-clip-text text-transparent drop-shadow-md">
-            Projects
-          </span>
-        </h2>
+      <div className="relative z-10 max-w-6xl mx-auto px-6">
+        {/* Header */}
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-3xl font-semibold text-white">
+            Selected Projects
+          </h2>
+          <p className="mt-4 text-gray-400">
+            Real-world applications I’ve designed, built, and shipped.
+          </p>
+        </div>
 
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, index) => (
-            <div
-              key={index}
-              className="relative group rounded-3xl overflow-hidden shadow-lg p-4 md:p-6 lg:p-8 bg-white/80 backdrop-blur-sm transition-transform duration-300 hover:-translate-y-2"
-            >
-              <img
-                src={project.image}
-                alt={project.name}
-                className="w-full h-auto object-contain rounded-xl transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="mt-4 text-center font-semibold text-lg">
-                {project.name}
-              </div>
-              <div className="mt-3 flex justify-center">
-                <button
-                  onClick={() => setSelectedProject(project)}
-                  className="px-6 py-2 rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 transition"
-                >
-                  View More
-                </button>
-              </div>
-            </div>
+        {/* Grid */}
+        <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {projects.map((project) => (
+            <ProjectCard
+              key={project.name}
+              project={project}
+              onOpen={() => setActiveProject(project)}
+            />
           ))}
         </div>
       </div>
 
+      {/* Case Study Modal */}
+      {activeProject && (
+        <ProjectModal
+          project={activeProject}
+          onClose={() => setActiveProject(null)}
+        />
+      )}
+    </section>
+  );
+}
+
+/* ---------------- Cards ---------------- */
+
+function ProjectCard({ project, onOpen }) {
+  return (
+    <div
+      className="group rounded-2xl overflow-hidden
+                 bg-white/5 backdrop-blur-xl
+                 border border-white/10
+                 hover:border-white/20
+                 transition"
+    >
+      <div className="overflow-hidden">
+        <img
+          src={project.image}
+          alt={project.name}
+          className="w-full h-48 object-cover
+                     transition-transform duration-500
+                     group-hover:scale-105"
+        />
+      </div>
+
+      <div className="p-5">
+        <h3 className="text-lg font-medium text-white">{project.name}</h3>
+
+        <p className="mt-2 text-sm text-gray-400 line-clamp-2">
+          {project.brief}
+        </p>
+
+        <button
+          onClick={onOpen}
+          className="mt-4 inline-flex items-center text-sm
+                     text-indigo-400 hover:text-indigo-300 transition"
+        >
+          View case study →
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ---------------- Modal ---------------- */
+
+function ProjectModal({ project, onClose }) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-6">
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-black/70 backdrop-blur-lg"
+        onClick={onClose}
+      />
+
       {/* Modal */}
-      {selectedProject && (
-        <div className="fixed inset-0 z-50 flex justify-center items-center p-4">
-          {/* Backdrop + Neon Glow */}
-          <div
-            className="absolute inset-0 bg-black/40 backdrop-blur-lg"
-            onClick={() => setSelectedProject(null)}
+      <div
+        className="relative z-10 max-w-4xl w-full
+                   bg-[#0e1424] border border-white/10
+                   rounded-3xl overflow-hidden
+                   shadow-2xl"
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-400
+                     hover:text-white transition text-2xl"
+        >
+          ×
+        </button>
+
+        <div className="p-8 grid md:grid-cols-2 gap-8">
+          {/* Image */}
+          <img
+            src={project.image}
+            alt={project.name}
+            className="rounded-xl object-cover w-full"
           />
-          <div className="absolute inset-0 rounded-3xl shadow-[0_0_60px_rgba(99,102,241,0.6)] pointer-events-none"></div>
 
-          <div className="relative bg-white rounded-3xl max-w-3xl w-full p-6 shadow-2xl overflow-y-auto max-h-[90vh] animate-slide-in z-10">
-            <button
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 font-bold text-3xl"
-              onClick={() => setSelectedProject(null)}
-            >
-              &times;
-            </button>
+          {/* Content */}
+          <div>
+            <h3 className="text-2xl font-semibold text-white">
+              {project.name}
+            </h3>
 
-            <img
-              src={selectedProject.image}
-              alt={selectedProject.name}
-              className="w-full h-auto object-contain rounded-xl mb-4"
-            />
-            <h3 className="text-2xl font-bold mb-2">{selectedProject.name}</h3>
-            <p className="text-gray-700 mb-4">{selectedProject.brief}</p>
+            <p className="mt-4 text-gray-400">{project.brief}</p>
 
-            <div className="flex flex-wrap gap-2 mb-4">
-              {selectedProject.tech.map((tech, i) => (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {project.tech.map((tech) => (
                 <span
-                  key={i}
-                  className="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-800"
+                  key={tech}
+                  className="px-3 py-1 text-xs
+                             rounded-full
+                             bg-white/10 text-gray-300"
                 >
                   {tech}
                 </span>
               ))}
             </div>
 
-            <div className="flex gap-4 mb-4">
+            <div className="mt-6 flex gap-4">
               <a
-                href={selectedProject.live}
+                href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 text-center bg-indigo-600 text-white px-4 py-2 rounded-xl hover:bg-indigo-700 transition"
+                className="flex-1 text-center px-4 py-2
+                           rounded-lg bg-indigo-600 text-white
+                           hover:bg-indigo-500 transition"
               >
                 Live
               </a>
+
               <a
-                href={selectedProject.github}
+                href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 text-center bg-gray-800 text-white px-4 py-2 rounded-xl hover:bg-gray-900 transition"
+                className="flex-1 text-center px-4 py-2
+                           rounded-lg border border-white/20
+                           text-white hover:border-white/40 transition"
               >
                 GitHub
               </a>
             </div>
 
-            <p className="text-gray-500 mb-2">
-              <strong>Challenges:</strong> {selectedProject.challenges}
-            </p>
-            <p className="text-gray-500">
-              <strong>Future Plans:</strong>{" "}
-              {selectedProject.improvements || selectedProject.future}
-            </p>
+            <div className="mt-6 text-sm text-gray-400 space-y-2">
+              <p>
+                <span className="text-gray-300 font-medium">Challenge:</span>{" "}
+                {project.challenges}
+              </p>
+              <p>
+                <span className="text-gray-300 font-medium">Next:</span>{" "}
+                {project.improvements}
+              </p>
+            </div>
           </div>
         </div>
-      )}
-
-      <style>{`
-        @keyframes fade-in {
-          0% {opacity: 0;}
-          100% {opacity: 1;}
-        }
-        @keyframes slide-in {
-          0% {transform: translateY(-50px); opacity: 0;}
-          100% {transform: translateY(0); opacity: 1;}
-        }
-        .animate-slide-in {
-          animation: slide-in 0.3s ease-out;
-        }
-      `}</style>
-    </section>
+      </div>
+    </div>
   );
-};
-
-export default Projects;
+}
