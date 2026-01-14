@@ -1,47 +1,72 @@
-import React from "react";
-import { education } from "../Datas/PortFolioData";
+import { education } from "../data/education";
 import { FaGraduationCap } from "react-icons/fa";
 
-const Education = () => {
+export default function Education() {
   return (
     <section
       id="education"
-      className="relative py-20 bg-gradient-to-b from-blue-50 via-white to-blue-50 overflow-hidden"
+      className="relative py-28 overflow-hidden bg-[#0b0f1a]"
     >
-      {/* Decorative blur circles */}
-      <div className="absolute -top-32 -left-32 w-96 h-96 bg-indigo-300/20 blur-[150px]" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-300/20 blur-[150px]" />
+      {/* Subtle Aurora Background */}
+      <div className="pointer-events-none absolute inset-0">
+        <div
+          className="absolute top-1/2 left-[-25%] w-[700px] h-[700px]
+                        bg-indigo-500/10 rounded-full blur-[180px]"
+        />
+        <div
+          className="absolute bottom-[-40%] right-[-25%] w-[700px] h-[700px]
+                        bg-cyan-500/10 rounded-full blur-[200px]"
+        />
+      </div>
 
-      <div className="relative z-10 container mx-auto px-6 max-w-3xl">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-16">
-          <span className="bg-gradient-to-r from-indigo-600 to-cyan-500 bg-clip-text text-transparent">
-            Education
-          </span>
-        </h2>
+      <div className="relative z-10 max-w-6xl mx-auto px-6">
+        {/* Section Header */}
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-3xl font-semibold text-white">Education</h2>
+          <p className="mt-4 text-gray-400">
+            Academic foundation that supports my engineering work.
+          </p>
+        </div>
 
-        <div className="flex justify-center">
+        {/* Centered Card */}
+        <div className="mt-16 flex justify-center">
           {education.map((edu, index) => (
             <div
               key={index}
-              className="relative bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 w-full max-w-md"
+              className="relative w-full max-w-md
+                         bg-white/5 backdrop-blur-xl
+                         border border-white/10
+                         rounded-3xl p-8
+                         hover:border-white/20
+                         transition"
             >
-              {/* Icon */}
-              <div className="absolute -top-5 -left-5 bg-indigo-500 text-white p-3 rounded-full shadow-lg">
-                <FaGraduationCap className="text-xl" />
+              {/* Icon Badge */}
+              <div
+                className="absolute -top-6 left-1/2 -translate-x-1/2
+                              w-12 h-12 rounded-full
+                              bg-indigo-500/20
+                              border border-indigo-400/30
+                              flex items-center justify-center
+                              text-indigo-300"
+              >
+                <FaGraduationCap size={20} />
               </div>
 
-              <h3 className="text-2xl font-bold text-gray-800 mb-2">
-                {edu.degree}
-              </h3>
-              <p className="text-gray-700 font-medium">{edu.institution}</p>
-              <p className="text-gray-500 mb-4">{edu.year}</p>
-              <p className="text-gray-600 leading-relaxed">{edu.details}</p>
+              <div className="mt-6 text-center">
+                <h3 className="text-xl font-medium text-white">{edu.degree}</h3>
+
+                <p className="mt-2 text-gray-300">{edu.institution}</p>
+
+                <p className="mt-1 text-sm text-gray-500">{edu.year}</p>
+
+                <p className="mt-6 text-sm text-gray-400 leading-relaxed">
+                  {edu.details}
+                </p>
+              </div>
             </div>
           ))}
         </div>
       </div>
     </section>
   );
-};
-
-export default Education;
+}

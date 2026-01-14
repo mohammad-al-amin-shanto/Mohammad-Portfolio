@@ -1,6 +1,6 @@
 export const profile = {
   name: "Mohammad Al Amin",
-  designation: "Full Stack Developer (React, Node.js)",
+  designation: "Full Stack Web Developer",
   photo:
     "https://res.cloudinary.com/dn2wb32gr/image/upload/v1758128272/IMG_20250914_181249_sbmgtp.png",
   resumeLink: "/Mohammad Resume.pdf",
