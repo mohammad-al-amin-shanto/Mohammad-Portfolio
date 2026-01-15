@@ -12,8 +12,8 @@ export const profile = {
   achievementImage:
     "https://res.cloudinary.com/duic0gfkw/image/upload/v1756336253/Cropped_Certificate_zacbwd_c_pad_b_gen_fill_w_4000_h_3500_atj6az.png",
   social: {
-    github: "https://github.com/alamin-shanto",
-    linkedin: "https://www.linkedin.com/in/mash02/",
+    github: "https://github.com/mohammad-al-amin-shanto",
+    linkedin: "https://www.linkedin.com/in/mohammad-al-amin-shanto/",
     twitter: "https://x.com/mdalamin94402",
     facebook: "https://www.facebook.com/mohammad.alamin.94402",
   },
