@@ -62,9 +62,17 @@ function DesktopNav({ onNavigate }) {
         <button
           key={id}
           onClick={() => onNavigate(id)}
-          className="text-gray-800 dark:text-gray-200 hover:text-indigo-500 transition"
+          className="group relative text-gray-800 dark:text-gray-200
+             hover:text-indigo-400 transition-colors duration-200"
         >
           {label}
+
+          <span
+            className="absolute left-0 -bottom-1 h-[1.5px] w-0
+               bg-indigo-400
+               transition-all duration-300
+               group-hover:w-full"
+          />
         </button>
       ))}
 

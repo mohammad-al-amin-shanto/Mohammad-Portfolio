@@ -40,7 +40,7 @@ export default function Hero() {
             {profile.intro}
           </p>
 
-          <div className="mt-10 flex gap-4">
+          <div className="mt-10 flex gap-3 sm:gap-4">
             <a
               href={profile.resumeLink}
               download="Mohammad_Al_Alamin_Resume.pdf"

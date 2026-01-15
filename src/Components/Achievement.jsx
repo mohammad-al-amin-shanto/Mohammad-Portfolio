@@ -4,68 +4,79 @@ export default function Achievement() {
   return (
     <section
       id="achievements"
-      className="relative py-28 overflow-hidden bg-[#0b0f1a]"
+      className="relative py-36 overflow-hidden bg-[#0b0f1a]"
     >
-      {/* Subtle Aurora Background */}
+      {/* Stronger Aurora Backdrop */}
       <div className="pointer-events-none absolute inset-0">
         <div
-          className="absolute top-1/2 left-[-25%] w-[700px] h-[700px]
-                        bg-indigo-500/10 rounded-full blur-[180px]"
+          className="absolute top-1/2 left-[-30%] w-[900px] h-[900px]
+                     bg-indigo-500/20 rounded-full blur-[260px]"
         />
         <div
-          className="absolute bottom-[-40%] right-[-25%] w-[700px] h-[700px]
-                        bg-cyan-500/10 rounded-full blur-[200px]"
+          className="absolute bottom-[-45%] right-[-30%] w-[900px] h-[900px]
+                     bg-cyan-500/15 rounded-full blur-[280px]"
         />
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
         {/* Header */}
-        <div className="max-w-2xl mx-auto">
-          <h2 className="text-3xl font-semibold text-white">Achievement</h2>
-          <p className="mt-4 text-gray-400">
-            A milestone that reflects my dedication and consistency.
+        <div className="max-w-3xl mx-auto">
+          <span
+            className="inline-block mb-4 px-4 py-1 rounded-full
+                           bg-white/10 text-indigo-300 text-sm tracking-wide"
+          >
+            Highlight
+          </span>
+
+          <h2 className="text-4xl font-semibold text-white">
+            A Defining Achievement
+          </h2>
+
+          <p className="mt-5 text-lg text-gray-400 leading-relaxed">
+            A milestone that reflects long-term dedication, discipline, and
+            consistent growth as an engineer.
           </p>
         </div>
 
-        {/* Spotlight Card */}
-        <div className="mt-16 flex justify-center">
-          <a
-            href={profile.achievementPDF}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative
-                       rounded-2xl overflow-hidden
-                       bg-white/5 backdrop-blur-xl
-                       border border-white/10
-                       hover:border-white/20
-                       transition"
+        {/* Spotlight */}
+        <div className="relative mt-20 flex justify-center">
+          {/* Frame */}
+          <div
+            className="relative rounded-3xl p-3
+                       bg-gradient-to-br from-indigo-500/30 to-cyan-500/20
+                       shadow-[0_0_120px_rgba(99,102,241,0.35)]"
           >
-            {/* Image */}
-            <img
-              src={profile.achievementImage}
-              alt="Achievement Certificate"
-              className="w-full max-w-md object-cover
-                         transition-transform duration-500
-                         group-hover:scale-105"
-            />
-
-            {/* Overlay */}
-            <div
-              className="absolute inset-0
-                            bg-black/40 opacity-0
-                            group-hover:opacity-100
-                            transition-opacity
-                            flex items-center justify-center"
+            <a
+              href={profile.achievementPDF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block rounded-2xl overflow-hidden
+                         bg-[#0e1424] border border-white/20"
             >
-              <span
-                className="px-4 py-2 rounded-lg
-                               bg-white/10 backdrop-blur
-                               text-white text-sm font-medium"
+              <img
+                src={profile.achievementImage}
+                alt="Achievement Certificate"
+                className="w-full max-w-lg object-cover
+                           transition-transform duration-700
+                           group-hover:scale-105"
+              />
+
+              {/* Overlay */}
+              <div
+                className="absolute inset-0 bg-black/50 opacity-0
+                           group-hover:opacity-100 transition-opacity
+                           flex items-center justify-center"
               >
-                View Certificate
-              </span>
-            </div>
-          </a>
+                <span
+                  className="px-5 py-2 rounded-lg
+                             bg-white/10 backdrop-blur
+                             text-white text-sm font-medium"
+                >
+                  View Certificate →
+                </span>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
     </section>

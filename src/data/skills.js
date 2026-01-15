@@ -1,23 +1,29 @@
 export const skills = {
   frontend: [
-    { name: "React", level: 90 },
+    { name: "HTML / CSS", level: 90 },
+    { name: "Tailwind CSS", level: 90 },
     { name: "JavaScript", level: 88 },
-    { name: "HTML/CSS", level: 94 },
-    { name: "Tailwind CSS", level: 92 },
-    { name: "TypeScript", level: 58 },
-    { name: "Next JS", level: 50 },
+    { name: "React", level: 90 },
+    { name: "Redux", level: 75 },
+    { name: "Next.js", level: 70 },
+    { name: "TypeScript", level: 75 },
   ],
+
   backend: [
     { name: "Node.js", level: 80 },
-    { name: "Express JS", level: 78 },
-    { name: "MongoDB", level: 75 },
-    { name: "JWT", level: 78 },
+    { name: "Express.js", level: 85 },
+    { name: "JWT", level: 80 },
+    { name: "MongoDB", level: 85 },
+    { name: "Mongoose", level: 80 },
+    { name: "PostgreSQL", level: 70 },
+    { name: "Prisma", level: 70 },
   ],
+
   tools: [
     { name: "Git", level: 88 },
-    { name: "Docker", level: 60 },
-    { name: "Vite", level: 80 },
-    { name: "Netlify", level: 88 },
-    { name: "Vercel", level: 80 },
+    { name: "Docker", level: 70 },
+    { name: "Vite", level: 85 },
+    { name: "Netlify", level: 85 },
+    { name: "Vercel", level: 85 },
   ],
 };

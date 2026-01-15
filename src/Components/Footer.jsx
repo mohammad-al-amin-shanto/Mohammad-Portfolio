@@ -1,29 +1,45 @@
-import React from "react";
-import { profile } from "../Datas/PortFolioData";
+import { profile } from "../data/profile";
 
-const Footer = () => {
+export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-400 py-6">
-      <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
-        <p className="text-sm">
-          © {new Date().getFullYear()} {profile.name}. All rights reserved.
+    <footer className="relative bg-[#0b0f1a] border-t border-white/10">
+      <div
+        className="max-w-6xl mx-auto px-6 py-8
+                      flex flex-col sm:flex-row
+                      items-center justify-between gap-4"
+      >
+        {/* Left */}
+        <p className="text-sm text-gray-500">
+          © {new Date().getFullYear()}{" "}
+          <span className="text-gray-300">{profile.name}</span>. All rights
+          reserved.
         </p>
-        <div className="flex space-x-4 mt-4 md:mt-0">
+
+        {/* Right */}
+        <nav className="flex items-center gap-6 text-sm font-medium">
           {Object.entries(profile.social).map(([key, link]) => (
             <a
               key={key}
               href={link}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-white transition"
+              className="group relative text-gray-300
+                         transition-colors duration-200
+                         hover:text-indigo-400"
             >
               {key.charAt(0).toUpperCase() + key.slice(1)}
+
+              {/* underline */}
+              <span
+                className="absolute left-0 -bottom-1 h-[1.5px] w-0
+                           bg-indigo-400
+                           transition-all duration-300
+                           group-hover:w-full"
+              />
             </a>
           ))}
-        </div>
+        </nav>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

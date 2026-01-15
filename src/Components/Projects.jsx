@@ -4,37 +4,55 @@ import { projects } from "../data/projects";
 export default function Projects() {
   const [activeProject, setActiveProject] = useState(null);
 
+  const [featured, ...rest] = projects;
+
   return (
     <section
       id="projects"
-      className="relative py-28 overflow-hidden bg-[#0b0f1a]"
+      className="relative py-32 overflow-hidden bg-[#0b0f1a]"
     >
-      {/* Aurora Background */}
+      {/* Aurora */}
       <div className="pointer-events-none absolute inset-0">
         <div
-          className="absolute top-[-30%] left-[-25%] w-[700px] h-[700px]
-                        bg-indigo-500/10 rounded-full blur-[180px]"
+          className="absolute top-[-30%] left-[-30%] w-[900px] h-[900px]
+                        bg-indigo-500/15 rounded-full blur-[240px]"
         />
         <div
-          className="absolute bottom-[-40%] right-[-25%] w-[700px] h-[700px]
-                        bg-cyan-500/10 rounded-full blur-[200px]"
+          className="absolute bottom-[-40%] right-[-30%] w-[900px] h-[900px]
+                        bg-cyan-500/10 rounded-full blur-[260px]"
         />
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-6">
         {/* Header */}
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl font-semibold text-white">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-4xl font-semibold text-white">
             Selected Projects
           </h2>
-          <p className="mt-4 text-gray-400">
-            Real-world applications I’ve designed, built, and shipped.
+          <p className="mt-5 text-lg text-gray-400">
+            A curated selection of real products I’ve designed, built, and
+            shipped.
           </p>
         </div>
 
-        {/* Grid */}
-        <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project) => (
+        {/* FEATURED PROJECT */}
+        <div className="mt-20">
+          <FeaturedProject
+            project={featured}
+            onOpen={() => setActiveProject(featured)}
+          />
+        </div>
+
+        <div className="mt-16 mb-10 h-px bg-white/10 max-w-3xl mx-auto" />
+
+        {/* SUPPORTING PROJECTS */}
+        <div
+          className={`mt-12 grid gap-8
+    md:grid-cols-2
+    ${rest.length === 2 ? "lg:grid-cols-2 lg:justify-center" : "lg:grid-cols-3"}
+  `}
+        >
+          {rest.map((project) => (
             <ProjectCard
               key={project.name}
               project={project}
@@ -44,7 +62,6 @@ export default function Projects() {
         </div>
       </div>
 
-      {/* Case Study Modal */}
       {activeProject && (
         <ProjectModal
           project={activeProject}
@@ -55,26 +72,91 @@ export default function Projects() {
   );
 }
 
-/* ---------------- Cards ---------------- */
+/* ---------------- FEATURED ---------------- */
+
+function FeaturedProject({ project, onOpen }) {
+  return (
+    <div
+      className="relative rounded-3xl overflow-hidden
+                 bg-white/10 backdrop-blur-xl
+                 border border-white/20
+                 shadow-[0_0_100px_rgba(99,102,241,0.3)]
+                 transition-transform duration-300 hover:-translate-y-1"
+    >
+      <div className="grid md:grid-cols-2 gap-10">
+        {/* Image */}
+        <div className="relative overflow-hidden">
+          <img
+            src={project.image}
+            alt={project.name}
+            className="w-full h-full object-cover
+                       transition-transform duration-700
+                       hover:scale-105"
+          />
+          <div
+            className="absolute inset-0 bg-gradient-to-r
+                          from-black/50 to-transparent"
+          />
+        </div>
+
+        {/* Content */}
+        <div className="p-10">
+          <span className="text-indigo-400 text-sm font-medium">
+            Featured Project
+          </span>
+
+          <h3 className="mt-3 text-3xl font-semibold text-white">
+            {project.name}
+          </h3>
+
+          <p className="mt-5 text-gray-300 text-lg leading-relaxed">
+            {project.brief}
+          </p>
+
+          <div className="mt-6 flex flex-wrap gap-2">
+            {project.tech.map((tech) => (
+              <span
+                key={tech}
+                className="px-3 py-1 text-xs rounded-full
+                           bg-white/10 text-gray-300"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          <button
+            onClick={onOpen}
+            className="mt-8 inline-flex items-center
+                       text-indigo-400 hover:text-indigo-300
+                       text-sm transition"
+          >
+            View full case study →
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------------- SUPPORTING ---------------- */
 
 function ProjectCard({ project, onOpen }) {
   return (
     <div
-      className="group rounded-2xl overflow-hidden
+      className="group rounded-2xl overflow-hidden 
                  bg-white/5 backdrop-blur-xl
                  border border-white/10
                  hover:border-white/20
-                 transition"
+                 transition-transform duration-300 hover:-translate-y-1"
     >
-      <div className="overflow-hidden">
-        <img
-          src={project.image}
-          alt={project.name}
-          className="w-full h-48 object-cover
-                     transition-transform duration-500
-                     group-hover:scale-105"
-        />
-      </div>
+      <img
+        src={project.image}
+        alt={project.name}
+        className="w-full h-44 object-cover
+                   transition-transform duration-500
+                   group-hover:scale-105"
+      />
 
       <div className="p-5">
         <h3 className="text-lg font-medium text-white">{project.name}</h3>
@@ -85,8 +167,7 @@ function ProjectCard({ project, onOpen }) {
 
         <button
           onClick={onOpen}
-          className="mt-4 inline-flex items-center text-sm
-                     text-indigo-400 hover:text-indigo-300 transition"
+          className="mt-4 text-sm text-indigo-400 hover:text-indigo-300 transition"
         >
           View case study →
         </button>
@@ -95,23 +176,20 @@ function ProjectCard({ project, onOpen }) {
   );
 }
 
-/* ---------------- Modal ---------------- */
+/* ---------------- MODAL ---------------- */
 
 function ProjectModal({ project, onClose }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-6">
-      {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/70 backdrop-blur-lg"
+        className="absolute inset-0 bg-black/80 backdrop-blur-lg"
         onClick={onClose}
       />
 
-      {/* Modal */}
       <div
         className="relative z-10 max-w-4xl w-full
                    bg-[#0e1424] border border-white/10
-                   rounded-3xl overflow-hidden
-                   shadow-2xl"
+                   rounded-3xl shadow-2xl overflow-hidden"
       >
         <button
           onClick={onClose}
@@ -122,14 +200,12 @@ function ProjectModal({ project, onClose }) {
         </button>
 
         <div className="p-8 grid md:grid-cols-2 gap-8">
-          {/* Image */}
           <img
             src={project.image}
             alt={project.name}
             className="rounded-xl object-cover w-full"
           />
 
-          {/* Content */}
           <div>
             <h3 className="text-2xl font-semibold text-white">
               {project.name}
@@ -141,8 +217,7 @@ function ProjectModal({ project, onClose }) {
               {project.tech.map((tech) => (
                 <span
                   key={tech}
-                  className="px-3 py-1 text-xs
-                             rounded-full
+                  className="px-3 py-1 text-xs rounded-full
                              bg-white/10 text-gray-300"
                 >
                   {tech}
@@ -161,7 +236,6 @@ function ProjectModal({ project, onClose }) {
               >
                 Live
               </a>
-
               <a
                 href={project.github}
                 target="_blank"
