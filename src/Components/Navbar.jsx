@@ -91,10 +91,18 @@ function MobileToggle({ isOpen, onToggle }) {
   return (
     <button
       onClick={onToggle}
-      className="md:hidden p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition"
       aria-label="Toggle navigation"
+      className="md:hidden
+                 flex items-center justify-center
+                 w-10 h-10
+                 rounded-lg
+                 bg-white/10 backdrop-blur
+                 border border-white/20
+                 text-white
+                 hover:bg-white/20
+                 transition"
     >
-      {isOpen ? "✕" : "☰"}
+      <span className="text-lg leading-none">{isOpen ? "✕" : "☰"}</span>
     </button>
   );
 }
